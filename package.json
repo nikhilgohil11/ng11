@@ -1,0 +1,79 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "A simple portfolio for developers",
+  "version": "0.1.1",
+  "author": "Nikhil Gohil <nikhilgohil11@gmail.com>",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.10.6",
+    "dotenv": "^6.2.0",
+    "formik": "^1.5.8",
+    "gatsby": "^2.18.0",
+    "gatsby-image": "^2.2.33",
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "gatsby-plugin-canonical-urls": "^2.1.15",
+    "gatsby-plugin-favicon": "^3.1.5",
+    "gatsby-plugin-google-analytics": "^2.1.28",
+    "gatsby-plugin-manifest": "^2.2.29",
+    "gatsby-plugin-nprogress": "^2.1.14",
+    "gatsby-plugin-offline": "^2.2.10",
+    "gatsby-plugin-react-helmet": "^3.1.15",
+    "gatsby-plugin-robots-txt": "^1.5.0",
+    "gatsby-plugin-sharp": "^2.2.14",
+    "gatsby-plugin-sitemap": "^2.2.21",
+    "gatsby-plugin-styled-components": "^3.1.13",
+    "gatsby-remark-copy-linked-files": "^2.1.30",
+    "gatsby-remark-images": "^3.1.32",
+    "gatsby-remark-prismjs": "^3.3.23",
+    "gatsby-remark-responsive-iframe": "^2.2.27",
+    "gatsby-remark-smartypants": "^2.1.16",
+    "gatsby-source-filesystem": "^2.1.31",
+    "gatsby-transformer-remark": "^2.6.37",
+    "gatsby-transformer-sharp": "^2.3.5",
+    "prismjs": "^1.17.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-anchor-link-smooth-scroll": "^1.0.12",
+    "react-dom": "^16.12.0",
+    "react-google-recaptcha": "^1.1.0",
+    "react-helmet": "^5.2.1",
+    "react-icons": "^3.8.0",
+    "react-toggle": "^4.1.1",
+    "react-truncate": "^2.4.0",
+    "react-twitter-widgets": "^1.7.1",
+    "styled-components": "^4.4.1",
+    "yup": "^0.26.10"
+  },
+  "keywords": [
+    "gatsby",
+    "portfolio",
+    "developer"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "start": "gatsby develop -o",
+    "format": "prettier --write \"src/**/*.js\"",
+    "reset": "rm -rf .cache/ public/",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-pipeline-operator": "^7.5.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:smakosh/gatsby-portfolio-dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smakosh/gatsby-portfolio-dev/issues"
+  }
+}
