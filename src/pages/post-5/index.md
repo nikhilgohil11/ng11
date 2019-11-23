@@ -1,7 +1,7 @@
 ---
 path: "/2017/10/03/learn-python-iteration-for-loop-while-loop/"
 category: "Python"
-tags: ["Python","Learning"]
+tags: ["python","learning"]
 title: "Learn Python — Iteration (for loop, while loop)"
 date: "2017-10-05T00:00:00.000Z"
 summary: "In my previous post variables and conditional statement covered. Now let’s see Iteration (for loop, while loop) So many ways I can use for loop..."

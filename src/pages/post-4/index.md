@@ -1,7 +1,7 @@
 ---
 path: "/2017/10/03/learn-python-conditional-statement-if-if-else/"
 category: "Python"
-tags: ["Python","Learning"]
+tags: ["python","learning"]
 title: "Learn Python — conditional statement ( if, if else )"
 date: "2017-10-04T00:00:00.000Z"
 summary: "Now I am looking for second best thing in any language. It is a conditional statement. Conditional statement makes our conversation more interesting and plays important roles to conclude conversations..."

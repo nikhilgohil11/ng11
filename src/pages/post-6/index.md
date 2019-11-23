@@ -1,7 +1,7 @@
 ---
 path: "/2017/10/16/learn-python-collection-of-data-list-tuple-and-dictionary-part-1/"
 category: "Python"
-tags: ["Python","Learning"]
+tags: ["python","learning"]
 title: "Learn Python — Collection of data ( List, Tuple and Dictionary) — part 1"
 date: "2017-10-16T00:00:00.000Z"
 summary: "I have tried learning how to declare the variable and assign value in python in the first post and then how to write if else in python and ..."

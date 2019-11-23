@@ -14,14 +14,10 @@ const ContactForm = ({
 	touched,
 }) => (
 	<Form
-		name="portfolio-dev"
-		method="post"
-		class="gform"
-		data-netlify="true"
-		data-netlify-recaptcha="true"
-		data-netlify-honeypot="bot-field"
-		action="https://script.google.com/macros/s/AKfycbyEr3bDSoxkX1pJaW93Qy44zB3zBluSEEb0BPQD/exec"
-	>
+		name="nikhil-dev"
+		method="POST"
+		encType="multipart/form-data"
+	>			
 		<InputField>
 			<Input
 				as={FastField}
@@ -119,7 +115,7 @@ export default withFormik({
 					)
 					.join('&')
 			}
-			await fetch('/?no-cache=1', {
+			await fetch('https://mailthis.to/ng11', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: encode({
