@@ -117,7 +117,7 @@ export default withFormik({
 			}
 			await fetch('https://briskforms.com/go/a8ee751907cd21050e347d7151baa1a0', {
 				method: 'POST',
-				// headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: encode({
 					'name':name,
 					'email':email,
@@ -128,6 +128,7 @@ export default withFormik({
 			resetForm()
 		} catch (err) {
 			setSubmitting(false)
+			resetForm()
 			setFieldValue('success', true)
 			// alert('Something went wrong, please try again!') // eslint-disable-line
 		}
