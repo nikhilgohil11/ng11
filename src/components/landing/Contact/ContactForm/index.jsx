@@ -115,23 +115,22 @@ export default withFormik({
 					)
 					.join('&')
 			}
-			await fetch('https://mailthis.to/ng11', {
+			await fetch('https://briskforms.com/go/a8ee751907cd21050e347d7151baa1a0', {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				// headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: encode({
-					'form-name': 'Contact: nikhilgohil11.com',
-					name,
-					email,
-					message,
-					'g-recaptcha-response': recaptcha,
+					'name':name,
+					'email':email,
+					'message':message,
 				}),
 			})
 			setSubmitting(false)
 			resetForm()
 		} catch (err) {
 			setSubmitting(false)
-			setFieldValue('success', false)
-			alert('Something went wrong, please try again!') // eslint-disable-line
+			resetForm()
+			// setFieldValue('success', false)
+			// alert('Something went wrong, please try again!') // eslint-disable-line
 		}
 	},
 })(ContactForm)
