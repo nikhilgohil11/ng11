@@ -129,7 +129,6 @@ export default withFormik({
 		} catch (err) {
 			setSubmitting(false)
 			setFieldValue('success', true)
-			resetForm()
 			// alert('Something went wrong, please try again!') // eslint-disable-line
 		}
 	},
