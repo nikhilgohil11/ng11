@@ -128,8 +128,8 @@ export default withFormik({
 			resetForm()
 		} catch (err) {
 			setSubmitting(false)
+			setFieldValue('success', true)
 			resetForm()
-			// setFieldValue('success', false)
 			// alert('Something went wrong, please try again!') // eslint-disable-line
 		}
 	},
