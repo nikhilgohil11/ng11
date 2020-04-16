@@ -9,6 +9,7 @@ export const Hamburger = styled.div`
   top: 0;
   right: 0;
   z-index: 5000;
+  width: 80%;
 
   @media (max-width: 414px) {
     display: block;
