@@ -1,154 +1,216 @@
-const { TITLE, AUTHOR, SITE_URL } = require('./src/constants');
-const path = require('path')
-const config = require('./data/config')
+const {
+  NODE_ENV,
+  URL: NETLIFY_SITE_URL = "https://www.nikhilgohil11.com",
+  DEPLOY_PRIME_URL: NETLIFY_DEPLOY_URL = NETLIFY_SITE_URL,
+  CONTEXT: NETLIFY_ENV = NODE_ENV
+} = process.env;
+const isNetlifyProduction = NETLIFY_ENV === "production";
+const siteUrl = isNetlifyProduction ? NETLIFY_SITE_URL : NETLIFY_DEPLOY_URL;
+const contentPosts = "content/blog";
+const path = require("path");
 
-require('dotenv').config({
-	path: `.env.${process.env.NODE_ENV}`,
-})
-// require('dotenv').config({
-//   path: `.env.production`,
-// });
-
-const siteMetadata = {
-  title: TITLE,
-  author: AUTHOR,
-  homepage: SITE_URL,
-  siteUrl: SITE_URL,
+const templatesDirectory = path.resolve(__dirname, "src/templates");
+const templates = {
+  page: path.resolve(templatesDirectory, "page-template.js")
 };
 
 module.exports = {
-  siteMetadata,
-  pathPrefix: '/',
+  siteMetadata: {
+    title: "Nikhil Gohil",
+    description:
+        "An engineer | more than 500+ problem-solving experience",
+    siteUrl,
+    author: {
+      name: "Nikhil Gohil",
+      minibio: `
+        Nikhil Gohil | Technology & programming based solutions, topics and blog
+      `,
+      url: `https://twitter.com/nikhilgohil11`,
+      image: `https://www.nikhilgohil11.com/img/nikhil.jpg`
+    },
+    image: `https://www.nikhilgohil11.com/img/nikhil.jpg`,
+    social: {
+      twitter: "@nikhilgohil11",
+      fbAppID: ""
+    }
+  },
   plugins: [
-    // {
-		// 	resolve: 'gatsby-source-graphql',
-		// 	options: {
-		// 		typeName: 'GitHub',
-		// 		fieldName: 'github',
-		// 		url: 'https://api.github.com/graphql',
-		// 		headers: {
-    //       Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
-		// 		},
-		// 		fetchOptions: {},
-		// 	},
-    // },
+    `gatsby-image`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-twitter`,
+    `gatsby-plugin-theme-ui`,
+    `gatsby-plugin-catch-links`,
     {
-      resolve: 'gatsby-source-filesystem',
+      // keep as first gatsby-source-filesystem plugin for gatsby image support
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: `${__dirname}/static/img`,
+        name: "uploads"
+      }
+    },
+    {
+      resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/src/pages`,
-        name: 'pages',
-      },
+        name: "pages"
+      }
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/src/resources`,
-        name: 'resources',
-      },
+        path: `${__dirname}/src/data`,
+        name: "data"
+      }
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: contentPosts,
+        name: contentPosts
+      }
+    },
+    {
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-images',
+            resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 640,
-            },
+              maxWidth: 1024,
+              linkImagesToOriginal: false,
+              quality: 80,
+              withWebp: true
+            }
           },
           {
-            resolve: 'gatsby-remark-responsive-iframe',
+            resolve: `gatsby-remark-images-medium-zoom`
+          },
+          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-external-links`
+        ]
+      }
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        defaultLayouts: { default: templates.page },
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
             options: {
-              wrapperStyle: 'margin-bottom: 1.0725rem',
-            },
+              maxWidth: 1024,
+              linkImagesToOriginal: false,
+              quality: 80,
+              withWebp: true
+            }
           },
           {
-            resolve: 'gatsby-remark-prismjs',
+            resolve: `gatsby-remark-copy-linked-files`,
             options: {
-              classPrefix: 'hljs-',
-            },
+              destinationDir: "static"
+            }
           },
-          'gatsby-remark-copy-linked-files',
-          'gatsby-remark-smartypants',
+          { resolve: `gatsby-remark-numbered-footnotes` },
+          { resolve: `gatsby-remark-smartypants` },
+          {
+            resolve: "gatsby-remark-external-links",
+            options: {
+              target: "_blank",
+              rel: "nofollow noopener"
+            }
+          },
+          {
+            resolve: "@weknow/gatsby-remark-twitter",
+            options: {
+              align: "center"
+            }
+          },
+          `gatsby-remark-autolink-headers`,
+          {
+            resolve: "gatsby-remark-embed-video",
+            options: {
+              width: 800,
+              ratio: 1.77, // Optional: Defaults to 16/9 = 1.77
+              height: 400, // Optional: Overrides optional.ratio
+              related: false, //Optional: Will remove related videos from the end of an embedded YouTube video.
+              noIframeBorder: true //Optional: Disable insertion of <style> border: 0
+            }
+          },
+          { resolve: `gatsby-remark-responsive-iframe` }
         ],
-      },
+        remarkPlugins: [require("remark-emoji")]
+      }
     },
     {
-      resolve: 'gatsby-plugin-google-analytics',
+      resolve: `gatsby-plugin-emotion`,
       options: {
-        trackingId: 'UA-35923103-1',
-      },
+        displayName: process.env.NODE_ENV === `development`
+      }
     },
-    'gatsby-plugin-offline',
-    'gatsby-plugin-react-helmet',
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-sharp',
     {
-			resolve: 'gatsby-plugin-nprogress',
-			options: {
-				color: config.themeColor,
-				showSpinner: false,
-			},
-		},
-		{
-			resolve: 'gatsby-plugin-google-analytics',
-			options: {
-				trackingId: config.googleAnalyticsID,
-				head: true,
-			},
-    },
-    // {
-		// 	resolve: 'gatsby-plugin-favicon',
-		// 	options: {
-		// 		logo: './static/favicon/favicon-512.png',
-		// 		injectHTML: true,
-		// 		icons: {
-		// 			android: true,
-		// 			appleIcon: true,
-		// 			appleStartup: true,
-		// 			coast: false,
-		// 			favicons: true,
-		// 			firefox: true,
-		// 			twitter: false,
-		// 			yandex: false,
-		// 			windows: false,
-		// 		},
-		// 	},
-		// },
-    'gatsby-plugin-styled-components',
-    {
-			resolve: 'gatsby-plugin-manifest',
-			options: {
-				name: config.defaultTitle,
-				short_name: 'starter',
-				start_url: '/',
-				background_color: config.backgroundColor,
-				theme_color: config.themeColor,
-				display: 'minimal-ui',
-				icon: './static/favicon/favicon-512.png',
-			},
-    },
-    'gatsby-plugin-offline',
-		{
-			resolve: `gatsby-plugin-alias-imports`,
-			options: {
-				alias: {
-					Components: path.resolve(__dirname, 'src/components'),
-					Common: path.resolve(__dirname, 'src/components/common'),
-					Static: path.resolve(__dirname, 'static/'),
-					Theme: path.resolve(__dirname, 'src/components/theme'),
-					Data: path.resolve(__dirname, 'data/config'),
-				},
-			},
-		},
-    'gatsby-plugin-sitemap',
-    {
-      resolve: 'gatsby-plugin-robots-txt',
+      resolve: "gatsby-plugin-sass",
       options: {
-        host: SITE_URL,
-        sitemap: `${SITE_URL}/sitemap.xml`,
-        policy: [{ userAgent: '*', allow: '/' }],
-      },
+        useResolveUrlLoader: true
+      }
     },
-  ],
+    `gatsby-plugin-sitemap`,
+    "gatsby-transformer-json",
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-104139048-1"
+      }
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Nikhil Gohil`,
+        short_name: `nikhil`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `static/img/android-chrome-144x144.png`
+      }
+    },
+    {
+      resolve: `gatsby-plugin-polyfill-io`,
+      options: {
+        features: [`Array.prototype.map`, `fetch`]
+      }
+    },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        resolveEnv: () => NETLIFY_ENV,
+        env: {
+          production: {
+            policy: [{ userAgent: "*" }]
+          },
+          "branch-deploy": {
+            policy: [{ userAgent: "*", disallow: ["/"] }],
+            sitemap: null,
+            host: null
+          },
+          "deploy-preview": {
+            policy: [{ userAgent: "*", disallow: ["/"] }],
+            sitemap: null,
+            host: null
+          }
+        }
+      }
+    },
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        // Setting a color is optional.
+        color: `#00d1b2`,
+        // Disable the loading spinner.
+        showSpinner: false
+      }
+    },
+    `gatsby-plugin-offline` // make sure to keep it last in the array
+  ]
 };

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "https://slack.com/",
+    "url": "https://slack.com/",
+    "description": "Slack brings the team together, wherever you are",
+    "image": "",
+    "date": "2020-03-28T05:30:28.263Z",
+    "tags": ["chat","integration"]
+  },
+  {
+    "title": "Utterances",
+    "url": "https://utteranc.es/",
+    "description": "A lightweight commenting system using GitHub issues.",
+    "image": "",
+    "date": "2020-01-25T05:30:28.263Z",
+    "tags": ["github"]
+  },
+  {
+    "title": "hipaajournal.com",
+    "url": "https://www.hipaajournal.com/",
+    "description": "Hippa Solutions",
+    "image": "",
+    "isAffiliate": true,
+    "date": "2020-01-23T05:30:28.263Z",
+    "tags": ["hippa"]
+  }
+]

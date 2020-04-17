@@ -1,35 +1,36 @@
-import { renderToString } from 'react-dom/server';
-import Helmet from 'react-helmet';
-import { ServerStyleSheet } from 'styled-components';
+import React from "react";
 
-export const replaceRenderer = ({
-  bodyComponent,
-  replaceBodyHTMLString,
-  setHeadComponents
-}) => {
-  const sheet = new ServerStyleSheet();
-  const body = renderToString(sheet.collectStyles(bodyComponent));
+export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
+  const pluginOptions = {
+    googleAdClientId: `ca-pub-1315859331795846`,
+    head: true
+  };
 
-  replaceBodyHTMLString(body);
-  setHeadComponents([sheet.getStyleElement()]);
-
-  return;
-};
-
-export const onRenderBody = ({
-  setHeadComponents,
-  setHtmlAttributes,
-  setBodyAttributes,
-}, pluginOptions) => {
-  const helmet = Helmet.renderStatic();
-  setHtmlAttributes(helmet.htmlAttributes.toComponent());
-  setBodyAttributes(helmet.bodyAttributes.toComponent());
-  setHeadComponents([
-    helmet.title.toComponent(),
-    helmet.link.toComponent(),
-    helmet.meta.toComponent(),
-    helmet.noscript.toComponent(),
-    helmet.script.toComponent(),
-    helmet.style.toComponent(),
+  if (process.env.NODE_ENV !== `production`) {
+    return null;
+  }
+  if (pluginOptions.googleAdClientId === undefined) {
+    return null;
+  }
+  const setComponents = pluginOptions.head
+    ? setHeadComponents
+    : setPostBodyComponents;
+  return setComponents([
+    <script
+      async
+      type="text/javascript"
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    />,
+    <script
+      key={`gatsby-plugin-google-adsense`}
+      dangerouslySetInnerHTML={{
+        __html: `
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "${pluginOptions.googleAdClientId}",
+            enable_page_level_ads: true
+        });
+        `
+      }}
+    />
   ]);
 };

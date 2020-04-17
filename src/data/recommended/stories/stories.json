@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Flutter Blog by GeekyAnts",
+    "url": "https://blog.geekyants.com/flutter/home",
+    "description": "If you are exploring flutter this blog's material is a worth digging.",
+    "date": "2020-03-28T10:31:28.263Z",
+    "tags": ["flutter"]
+  },
+  {
+    "title": "React Native vs Flutter",
+    "url": "https://hackr.io/blog/react-native-vs-flutter",
+    "description": "The summary \"React Native vs Flutter Summary\" is must reach if you want to choose between React Native and Flutter",
+    "date": "2020-04-02T10:30:28.263Z",
+    "tags": ["react-native","flutter"]
+  }
+]

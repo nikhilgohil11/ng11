@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Adobe XD CC - 30 Tips & Tricks",
+    "description": "by Learn UX https://www.youtube.com/channel/UCIiougY7XtqrC-40kjncEeQ",
+    "image": "",
+    "url": "https://www.youtube.com/watch?v=ztWItS5NM2M",
+    "date": "2017-07-19T14:20:21.638Z",
+    "type": "youtube",
+    "tags": ["adobe-xd"]
+  },
+  {
+    "title": "Material Theming with Flutter (Flutter Interact '19)",
+    "description": "",
+    "image": "",
+    "url": "https://www.youtube.com/watch?v=stoJpMeS5aY",
+    "date": "2019-12-12T14:20:21.638Z",
+    "type": "youtube",
+    "tags": ["flutter"]
+  },
+  {
+    "title": "Design Patterns in Plain English",
+    "description": "",
+    "image": "",
+    "url": "https://www.youtube.com/watch?v=NU_1StN5Tkk",
+    "date": "2020-01-06T14:20:21.638Z",
+    "type": "youtube",
+    "tags": ["design-patterns"]
+  },
+  {
+    "title": "WebSockets (using Socket.io) Tutorial #1 - What Are WebSockets?",
+    "description": "",
+    "image": "",
+    "url": "https://www.youtube.com/watch?v=vQjiN8Qgs3c",
+    "date": "2020-03-27T14:20:21.638Z",
+    "type": "youtube",
+    "tags": ["socket.io","web-sockets"]
+  }
+]
