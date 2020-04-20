@@ -1,0 +1,85 @@
+---
+templateKey: blog-post
+title: Swift UICollectionView Snake (🐍) or ZigZag (⦚) View
+description: >-
+  Disable CORS for IIS 10 website by allowing all origins in two simple steps.
+author: Nikhil Gohil
+authorURL: "https://twitter.com/nikhilgohil11"
+date: 2019-08-14T16:54:00.000Z
+image: /img/blog/snake-uicollectionview.png
+tags:
+  - swift
+  - uicollectionview
+---
+
+UICollectionView is a most robust component in iOS development, we can create many views and structure taking support from Layout.
+
+You can have a look at the [youtube](https://www.youtube.com/watch?v=zGqv--Womzg&feature) or [github](https://github.com/nikhilgohil11/SnakeCollectionView).
+
+This project is made for learning purpose, how by using custom `UICollectionViewFlowLayout` we can achieve a cells arrangement in reverse order for consecutive rows.
+
+Note: _You can use this kind layout to showcase career path, tracking, etc._
+
+If you look at the subclass of UICollectionViewFlowLayout, there are three functions need to be added.
+
+#### Layout functions
+
+1. `func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes?`
+2. `func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]?`
+3. `func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool`
+
+```xml
+class VerticalScrollFlowLayout: UICollectionViewFlowLayout {
+    var collectionViewWidth : CGFloat?
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let currentItemAttributes : UICollectionViewLayoutAttributes = super.layoutAttributesForItem(at: indexPath)!
+        let width : CGFloat = self.collectionViewWidth ?? 300
+        var frame : CGRect = currentItemAttributes.frame;
+        let column : Double = Double(indexPath.item/3)
+        if (column.remainder(dividingBy: 2) == 0) {
+            frame.origin.x = width - (frame.size.width+frame.origin.x)
+        }
+        currentItemAttributes.frame = frame;
+        return currentItemAttributes;
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let originalAttributes =
+            super.layoutAttributesForElements(in: rect)
+        var updatedAttributes : [UICollectionViewLayoutAttributes] = originalAttributes!
+        for attributes in originalAttributes! {
+            if !(attributes.representedElementKind != nil) {
+                let index = updatedAttributes.firstIndex(of: attributes)
+                updatedAttributes[index!] = self.layoutAttributesForItem(at: attributes.indexPath)!
+            }
+        }
+        return updatedAttributes;
+    }
+    
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+}
+```
+
+Once you are ready with the layout you can use it by assigning it to `collectionViewLayout` property of UICollectionView
+
+
+```
+let flowLayout = VerticalScrollFlowLayout()
+flowLayout.minimumLineSpacing = 1
+flowLayout.minimumInteritemSpacing = 1
+flowLayout.collectionViewWidth = self.view.frame.size.width
+flowLayout.scrollDirection = .vertical
+flowLayout.itemSize = CGSize(width: (self.view.frame.size.width/3)-1, height: 99)
+self.collectionView.collectionViewLayout = flowLayout
+````
+
+As you can see, by changing the values of `itemSize`, `minimumInteritemSpacing` and `collectionViewWidth` this collectionview layout can be use in many ways.
+
+> If you want to have detail docuemntation on UICollectionView and it's layout then I must recommend the additional resources below.
+
+#### Additional Resources
+
+- [UICollectionView](https://developer.apple.com/documentation/uikit/uicollectionview) 
+- [UICollectionViewFlowLayout](https://developer.apple.com/documentation/uikit/uicollectionviewflowlayout).
