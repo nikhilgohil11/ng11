@@ -1,12 +1,8 @@
 import {
   EmailShareButton,
   EmailIcon,
-  LinkedinShareButton,
-  LinkedinIcon,
   TwitterShareButton,
   TwitterIcon,
-  RedditShareButton,
-  RedditIcon,
   PocketShareButton,
   PocketIcon
 } from "react-share";
@@ -28,20 +24,6 @@ const ArticleShare = ({ article, location }) => {
         >
           <TwitterIcon size={48} round={true} />
         </TwitterShareButton>
-        <LinkedinShareButton
-          url={location.href}
-          className="button"
-          title={article.title}
-        >
-          <LinkedinIcon size={48} round={true} />
-        </LinkedinShareButton>
-        <RedditShareButton
-          url={location.href}
-          className="button"
-          title={article.title}
-        >
-          <RedditIcon size={48} round={true} />
-        </RedditShareButton>
         <PocketShareButton
           url={location.href}
           className="button"
