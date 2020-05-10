@@ -1,0 +1,133 @@
+---
+templateKey: blog-post
+title: 'Swift: Barcode & QR Code scanner'
+description: >- 
+  There are so many types of barcode and a qr code, iOS supports a qrcode and barcodes scanning by AVFoundation
+author: Nikhil Gohil
+authorURL: 'https://twitter.com/nikhilgohil11'
+date: 2019-01-29T18:35:00.000Z
+lastModificationTime: 2019-01-29T20:35:00.000Z
+image: /img/blog/barcode-qrcode-scan-screenshot.png
+tags:
+  - swift
+  - avfoundation
+  - barcode
+  - qrcode
+---
+
+There are so many types of barcode and a qr code, iOS supports a qrcode and barcodes scanning by **AVFoundation**
+
+#### Supported code types
+
+* [QR Code](https://en.wikipedia.org/wiki/QR_code)
+* [UPC-E](https://en.wikipedia.org/wiki/Universal_Product_Code)
+* [Code 39](https://en.wikipedia.org/wiki/Code_39)
+* [Code 39 Mod 43](https://en.wikipedia.org/wiki/Code_39#Code_39_mod_43)
+* [Code 93](https://en.wikipedia.org/wiki/Code_93)
+* [Code 128](https://en.wikipedia.org/wiki/Code_128)
+* [EAN-8](https://en.wikipedia.org/wiki/EAN-8)
+* [EAN-13](https://en.wikipedia.org/w/index.php?title=EAN_13&redirect=no)
+* [Aztec Code](https://en.wikipedia.org/wiki/Aztec_Code)
+* [PDF 417](https://en.wikipedia.org/wiki/PDF417)
+* [ITF 14](https://en.wikipedia.org/wiki/ITF-14)
+* [Data Matrix](https://en.wikipedia.org/wiki/Data_Matrix)
+* [Interleaved 2 of 5](https://en.wikipedia.org/wiki/Interleaved_2_of_5)
+
+### Swift Project
+
+#### 1. Decide AVMetadataObject.ObjectType
+
+There are multipel types of code we can scan using `AVFoundation`.
+
+We can create a variable for AVMetadataObject.ObjectType and assign value to get the expected scan results.
+
+```bash
+      switch value {
+            case AVMetadataObject.ObjectType.upce.rawValue:
+                 self.codes = [AVMetadataObject.ObjectType.upce]
+            case AVMetadataObject.ObjectType.code39.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.code39]
+            case AVMetadataObject.ObjectType.code39Mod43.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.code39Mod43]
+            case AVMetadataObject.ObjectType.code93.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.code93]
+            case AVMetadataObject.ObjectType.code128.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.code128]
+            case AVMetadataObject.ObjectType.ean8.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.ean8]
+            case AVMetadataObject.ObjectType.ean13.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.ean13]
+            case AVMetadataObject.ObjectType.aztec.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.aztec]
+            case AVMetadataObject.ObjectType.pdf417.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.pdf417]
+            case AVMetadataObject.ObjectType.itf14.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.itf14]
+            case AVMetadataObject.ObjectType.dataMatrix.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.dataMatrix]
+            case AVMetadataObject.ObjectType.qr.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.qr]
+            case AVMetadataObject.ObjectType.interleaved2of5.rawValue:
+                self.codes = [AVMetadataObject.ObjectType.interleaved2of5]
+            default:
+                self.codes = [AVMetadataObject.ObjectType.upce,
+                                      AVMetadataObject.ObjectType.code39,
+                                      AVMetadataObject.ObjectType.code39Mod43,
+                                      AVMetadataObject.ObjectType.code93,
+                                      AVMetadataObject.ObjectType.code128,
+                                      AVMetadataObject.ObjectType.ean8,
+                                      AVMetadataObject.ObjectType.ean13,
+                                      AVMetadataObject.ObjectType.aztec,
+                                      AVMetadataObject.ObjectType.pdf417,
+                                      AVMetadataObject.ObjectType.itf14,
+                                      AVMetadataObject.ObjectType.dataMatrix,
+                                      AVMetadataObject.ObjectType.interleaved2of5,
+                                      AVMetadataObject.ObjectType.qr]
+      }
+```
+
+#### 2. Create capture session
+
+Now create capture session and assign **codes** value to `metadataObjectTypes`
+
+```bash
+let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
+        
+        guard let captureDevice = deviceDiscoverySession.devices.first else {
+            print("Failed to get the camera device")
+            return
+        }
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            captureSession.addInput(input)
+            let captureMetadataOutput = AVCaptureMetadataOutput()
+            captureSession.addOutput(captureMetadataOutput)
+            
+            captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            captureMetadataOutput.metadataObjectTypes = codes
+            
+        } catch {
+            // If any error occurs, simply print it out and don't continue any more.
+            print(error)
+            return
+        }
+```
+
+#### 3. Start running session
+
+Next step is to to start a running session using `AVCaptureVideoPreviewLayer`
+
+```bash
+        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        cameraPreviewLayer?.frame = view.layer.bounds
+        view.layer.addSublayer(cameraPreviewLayer!)
+        
+        captureSession.startRunning()
+        
+```
+
+#### 4. Github Link
+
+https://github.com/nikhilgohil11/G-Scanner
