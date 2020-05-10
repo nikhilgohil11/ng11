@@ -54,7 +54,7 @@ const ArticleHero = ({ article }) => {
                     Follow @nikhilgohil11
                   </a>
                 </span>
-                <span>by Nikhil Gohil11</span>
+                <span>by Nikhil Gohil</span>
                 <span>
                   {article.date} &middot; {article.timeToRead} &middot; Last
                   Updated:{" "}
